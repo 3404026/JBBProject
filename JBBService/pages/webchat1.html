@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>webchat1</title>
+    <script src="js/jquery-min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var ws;
+        function ToggleConnectionClicked() {
+            try {
+                ws = new WebSocket("ws://172.21.111.104:1818/chat");
+                
+                ws.onopen = function (event) {
+                    alert("已经与服务器建立了连接\r\n当前连接状态：" + this.readyState);
+                };
+
+
+                ws.onmessage = function (event) {
+                    txtarea.textContent = "接收到的数据：" +  event.data + "\r\n" + txtarea.textContent
+                    //alert("接收到服务器发送的数据：\r\n" + event.data);
+                };
+
+
+
+                ws.onclose = function (event) {
+                    alert("已经与服务器断开连接\r\n当前连接状态：" + this.readyState);
+                };
+
+
+                ws.onerror = function (event) {
+                    alert("WebSocket异常！" + event.toString());
+
+                };
+            } catch (ex) {
+                alert(ex.message);
+            }
+            //document.getElementById("ToggleConnection").innerHTML = "断开";
+        };
+
+        function SendData() {
+            try {
+                var str = document.getElementById("msgbox").value;
+                ws.send(str);
+            } catch (ex) {
+                alert(ex.message);
+            }
+        };
+
+        //function close() {
+        //    try {
+        //        ws.close();
+        //        ws = null;
+        //    } catch (ex) {
+        //        alert(ex.message);
+        //    }
+        //};
+
+
+        function seeState() {
+            alert(ws.readyState);
+        }
+
+    </script>
+</head>
+<body>
+    <button id='ToggleConnection' type="button" onclick='ToggleConnectionClicked();'>
+        连接服务器
+    </button><br />
+    <br />
+    <input type="text" id="msgbox" value=" " />
+    <button id='ToggleConnection' type="button" onclick='SendData();'>
+        发送消息
+    </button><br />
+    <br />
+    <button id='ToggleConnection' type="button" onclick='seeState();'>
+        查看状态
+    </button><br />
+    <br />
+
+    <button id='sendmsg' type="button" onclick='sendmsg();'>
+        sendmsg
+    </button><br />
+    <textarea id="txtarea" >
+
+    </textarea>
+
+    <br />
+
+
+</body>
+</html>

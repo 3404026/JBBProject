@@ -1,0 +1,91 @@
+﻿
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>关注度报告</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    <link href="css/loading.css" rel="stylesheet" />
+
+    <style type="text/css">
+        #prevProd{
+            text-align: left; /*让div内部文字居中*/
+            margin-top:5px;  
+            margin-left:1px;
+            margin-right:1px;
+            width:50px;
+            position: absolute;
+            left:0;top:0;
+        }
+
+        #main {
+            text-align: center; /*让div内部文字居中*/
+            background-color: #fff;
+            border-radius: 20px;
+            width: 98%;
+            height: 90%;
+            margin-top: 20px;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/chartData.js"></script>
+
+    <script>
+
+        //监听加载状态改变
+        window.onload = function () {
+            initChartPie(0,"");
+            //initChartBar(0);
+        }
+	
+	function funclick(){
+              initChartPie(0);
+//            var strProdCode = $("#prod_code").val();
+  //          var strProdName = $("#prod_name").val();
+    //        var inpos=strProdCode.lastIndexOf("-");
+      //      if (inpos==-1)
+	//        initChartPie(0);
+          //  else
+            //    initChartPie(strProdCode.substr(0,inpos));
+	}
+ 
+    </script>
+
+
+</head>
+<body>
+  
+
+    <div  id="prevProd" onclick="funclick();"><<返回</div>
+    <input type="hidden"  id="prod_code">
+    <input type="hidden"  id="prod_name">
+          
+    <!--主体-->
+
+    <div class="main" id="main">div1</div>
+
+    
+    <div id="myloading" class="loadEffect">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div> 
+
+</body>
+</html>
+

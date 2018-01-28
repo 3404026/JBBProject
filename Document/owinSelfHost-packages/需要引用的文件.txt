@@ -1,0 +1,16 @@
+c:\program files (x86)\reference assemblies\microsoft\framework\.netframework\v4.5\system.net.http.dll
+c:\program files (x86)\reference assemblies\microsoft\framework\.netframework\v4.5\system.configuration.dll
+
+
+
+
+e:\myproject\webapi_owinselfhost\packages\microsoft.aspnet.webapi.client.5.2.3\lib\net45\system.net.http.formatting.dll
+e:\myproject\webapi_owinselfhost\packages\microsoft.aspnet.webapi.core.5.2.3\lib\net45\system.web.http.dll
+e:\myproject\webapi_owinselfhost\packages\microsoft.aspnet.webapi.owin.5.2.3\lib\net45\system.web.http.owin.dll
+e:\myproject\webapi_owinselfhost\packages\microsoft.owin.2.0.2\lib\net45\microsoft.owin.dll
+e:\myproject\webapi_owinselfhost\packages\microsoft.owin.host.httplistener.2.0.2\lib\net45\microsoft.owin.host.httplistener.dll
+e:\myproject\webapi_owinselfhost\packages\microsoft.owin.hosting.2.0.2\lib\net45\microsoft.owin.hosting.dll
+e:\myproject\webapi_owinselfhost\packages\newtonsoft.json.6.0.4\lib\net45\newtonsoft.json.dll
+e:\myproject\webapi_owinselfhost\packages\owin.1.0\lib\net40\owin.dll
+
+

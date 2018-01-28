@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+
+    <script>
+        function funClick()
+        {
+            var apiurl = "http://localhost:12320/api/ProductIO/SaveData";
+
+            //1、JS中数组作为参数 ["1", "2", "3", "4"];
+            var arr = [];
+            arr.push(txt1.value, txt2.value, txt3.value, txt4.value);
+            $.ajax({
+                type: "post",
+                url: apiurl,
+                contentType: 'application/json',
+                data: JSON.stringify(arr),
+                success: function (data, status) {
+                    if (data > 0 && status == 'success')
+                        alert("提交成功！" + status + data);
+                }
+            });
+
+
+        }
+
+
+    </script>
+</head>
+<body>
+
+    <form>
+        <input id="txt1" type="text" />
+        <input id="txt2" type="text" />
+        <input id="txt3" type="text" />
+        <input id="txt4" type="text" />
+
+        <input type="button" value="提交" onclick="funClick();">
+
+    </form>
+
+    
+
+
+</body>
+</html>

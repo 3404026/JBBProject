@@ -1,0 +1,47 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>图片轮播 - javascript - 易U</title>
+
+    <style type="text/css">
+        div.bottom {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        padding-top: 20px;
+        font-size: 70px;
+        text-align: center;
+        }
+        body {
+            padding:0;
+            margin:0;
+        }
+    </style>
+</head>
+
+<body>
+    <script language="javascript" src="pic.js"></script>
+    <script language="javascript">
+        var da = [];
+
+        da.push({ src: "db/welcome1.jpg", name: "", link: "welcome.html" });
+        da.push({ src: "db/welcome2.jpg", name: "", link: "welcome.html" });
+        da.push({ src: "db/welcome3.jpg", name: "", link: "welcome.html" });
+        da.push({ src: "db/welcome4.jpg", name: "", link: "welcome.html" });
+        da.push({ src: "db/welcome5.jpg", name: "", link: "welcome.html" });
+
+        var c = {
+            bg: "#333",//右下数字背景颜色
+            color: "#FFF",//右下数字颜色
+            cbg: "#FFF",//右下当前数字背景颜色
+            ccolor: "#333",//右下当前数字颜色
+            bc: "#ccc",//边框颜色
+            step: 3000 //步长
+        }
+        new IMGS("TopI", window.screen.width+10,window.screen.height-60, da, c);
+        //new IMGS("id号随便写不要和页面的id重复就可以",宽度,高度,数据[,设置]);
+    </script>
+    <marquee width=100% scrollamount="4" scrolldelay="100"> <font face='Microsoft yahei' color=#ff0000 size=10><strong>温馨提示：欢迎体验，请诚信购物。         柜台活动：1) 用户在活动时间内订购诚信通成功后，系统自助赠送询价单订阅V2.0免费体验6个月。2）用户在活动时间内订购诚信通，且在次月10号前开通，即可获得.xin域名免费使用一年+诚企贷利息红包688元。</font></STRONG></marquee>
+</body>
+</html>
