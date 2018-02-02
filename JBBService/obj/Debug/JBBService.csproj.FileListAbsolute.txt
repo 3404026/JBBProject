@@ -1,0 +1,13 @@
+E:\myProject\JBBProject\JBBService\bin\Debug\OwinSelfhostSample.exe.config
+E:\myProject\JBBProject\JBBService\bin\Debug\OwinSelfhostSample.exe.manifest
+E:\myProject\JBBProject\JBBService\bin\Debug\OwinSelfhostSample.application
+E:\myProject\JBBProject\JBBService\bin\Debug\OwinSelfhostSample.exe
+E:\myProject\JBBProject\JBBService\bin\Debug\OwinSelfhostSample.pdb
+E:\myProject\JBBProject\JBBService\bin\Debug\Newtonsoft.Json.dll
+E:\myProject\JBBProject\JBBService\bin\Debug\System.Net.Http.Formatting.dll
+E:\myProject\JBBProject\JBBService\bin\Debug\System.Web.Http.dll
+E:\myProject\JBBProject\JBBService\obj\Debug\OwinSelfhostSample.exe.manifest
+E:\myProject\JBBProject\JBBService\obj\Debug\OwinSelfhostSample.application
+E:\myProject\JBBProject\JBBService\obj\Debug\OwinSelfhostSample.exe
+E:\myProject\JBBProject\JBBService\obj\Debug\OwinSelfhostSample.pdb
+E:\myProject\JBBProject\JBBService\obj\Debug\JBBService.csprojResolveAssemblyReference.cache

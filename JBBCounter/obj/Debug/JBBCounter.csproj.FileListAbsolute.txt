@@ -1,0 +1,16 @@
+E:\myProject\JBBProject\JBBCounter\bin\Debug\JBBCounter.exe.config
+E:\myProject\JBBProject\JBBCounter\bin\Debug\JBBCounter.exe
+E:\myProject\JBBProject\JBBCounter\bin\Debug\JBBCounter.pdb
+E:\myProject\JBBProject\JBBCounter\bin\Debug\Newtonsoft.Json.dll
+E:\myProject\JBBProject\JBBCounter\bin\Debug\System.Web.Http.dll
+E:\myProject\JBBProject\JBBCounter\bin\Debug\System.Net.Http.Formatting.dll
+E:\myProject\JBBProject\JBBCounter\bin\Debug\System.Web.Http.xml
+E:\myProject\JBBProject\JBBCounter\bin\Debug\System.Net.Http.Formatting.xml
+E:\myProject\JBBProject\JBBCounter\bin\Debug\zh-Hans\System.Web.Http.resources.dll
+E:\myProject\JBBProject\JBBCounter\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
+E:\myProject\JBBProject\JBBCounter\obj\Debug\JBBCounter.csprojResolveAssemblyReference.cache
+E:\myProject\JBBProject\JBBCounter\obj\Debug\JBBCounter.Form1.resources
+E:\myProject\JBBProject\JBBCounter\obj\Debug\JBBCounter.Properties.Resources.resources
+E:\myProject\JBBProject\JBBCounter\obj\Debug\JBBCounter.csproj.GenerateResource.Cache
+E:\myProject\JBBProject\JBBCounter\obj\Debug\JBBCounter.exe
+E:\myProject\JBBProject\JBBCounter\obj\Debug\JBBCounter.pdb

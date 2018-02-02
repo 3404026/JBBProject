@@ -100,17 +100,101 @@ namespace JBBService.controllers
             {
                 return null;
             }
-
-            
-
         }
-        
 
 
+        //浏览器测试 webaip
+        //https://172.21.111.104:12321/api/User/getCategoryCnt?Pcode=0
+        //http://172.21.111.104:1232/api/User/getCategoryCnt?Pcode=0
+        //参考资料https://www.cnblogs.com/landeanfen/p/5337072.html#_label1_0
+        [HttpPost]
+        [HttpGet]
+        public string getInventoryByCaizhi()
+        {
+
+            List<Chart> list1 = new List<Chart>();
+
+            MySqlConnection con = new MySqlConnection(connectionString);
+            con.Open();
+            DbTransaction trans = con.BeginTransaction();//开始事务  
+
+            string sqldel = "delete from t_inventory_stay where create_date in (select max(create_date) from t_inventory)";
+            MySqlCommand cmdDel = new MySqlCommand(sqldel, con);
+            cmdDel.ExecuteNonQuery();
+
+            string sqlIns = "insert into t_inventory_stay  select *  from t_inventory where create_date in (select max(create_date) from t_inventory)";
+            MySqlCommand cmdIns = new MySqlCommand(sqlIns, con);
+            cmdDel.ExecuteNonQuery();
+
+
+            string sqlSelect = @"select 
+	                            a.cname   name ,
+	                            (select count(*) from t_inventory_stay x ,t_products y  where x.rfid_no = y.rfid_no and y.caizhi_code=a.para_code and x.create_date in (select max(create_date) from t_inventory_stay) )  value,
+                                a.para_code pcode
+                            from  t_param  a 
+                            where a.parent_para_id=10";
+            try
+            {
+                ds = MySqlHelper.GetDataSet(connectionString, CommandType.Text, sqlSelect);
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (Convert.ToInt32(row.ItemArray[1])>0)
+                        list1.Add(new Chart() { name = row.ItemArray[0].ToString(), value = Convert.ToInt32(row.ItemArray[1]), pcode = row.ItemArray[2].ToString() });
+                }
+                return JsonConvert.SerializeObject(list1);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        //浏览器测试 webaip
+        //https://172.21.111.104:12321/api/User/getCategoryCnt?Pcode=0
+        //http://172.21.111.104:1232/api/User/getCategoryCnt?Pcode=0
+        //参考资料https://www.cnblogs.com/landeanfen/p/5337072.html#_label1_0
+        [HttpPost]
+        [HttpGet]
+        public string getInventoryByPeidai(string pcode)
+        {
+
+            List<inventory> list1 = new List<inventory>();
+            string sqlSelect =
+                          @" select  peidai_name , count(distinct rfid_no) jianshu  ,count(rfid_no) cishu ,  round(sum(timestampdiff(MINUTE,out_dttm,in_dttm))/60,1) sichang
+                             from v_inventory_io 
+                             where caizhi_code = '" + pcode +"'" +
+                           " group by peidai_name";
+
+            try
+            {
+                DataSet ds = MySqlHelper.GetDataSet(connectionString, CommandType.Text, sqlSelect);
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    if (Convert.ToInt32(row.ItemArray[1]) > 0)
+                        list1.Add(new inventory() { peidaiName = row.ItemArray[0].ToString(),   
+                                                    jianShu = Convert.ToInt32(row.ItemArray[1]),
+                                                    ciShu   = Convert.ToInt32(row.ItemArray[2]),
+                                                    timeCount = Convert.ToDecimal(row.ItemArray[3]) });
+                }
+                return JsonConvert.SerializeObject(list1);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        class inventory {
+            public string peidaiName { get; set; }
+            public int jianShu { get; set; }
+            public int ciShu { get; set; }
+            public decimal timeCount { get; set; }
+        }
 
 
     }
-
 }
 
 

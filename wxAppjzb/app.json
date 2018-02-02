@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/chart1/chart1",
+    "pages/chart2/chart2",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "数据分析",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/chart1/chart1",
+        "text": "关注度",
+        "iconPath": "images/pie_L.png",
+        "selectedIconPath": "images/pie_H.png"
+      },
+      {
+        "pagePath": "pages/chart2/chart2",
+        "text": "成交率",
+        "iconPath": "images/bar_L.png",
+        "selectedIconPath": "images/bar_H.png"
+      },      
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "关于",
+        "iconPath": "images/me_L.png",
+        "selectedIconPath": "images/me_H.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

@@ -74,7 +74,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\owinSelfHost-packages\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Document\owinSelfHost-packages\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\owinSelfHost-packages\Owin.dll</HintPath>
@@ -85,13 +85,13 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\owinSelfHost-packages\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\Document\owinSelfHost-packages\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\owinSelfHost-packages\System.Web.Http.dll</HintPath>
+      <HintPath>..\Document\owinSelfHost-packages\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.Owin">
       <HintPath>..\owinSelfHost-packages\System.Web.Http.Owin.dll</HintPath>
@@ -134,6 +134,8 @@
     <Content Include="pages\css\reset.css" />
     <Content Include="pages\css\style.css" />
     <Content Include="pages\images\loading.gif" />
+    <Content Include="pages\inventory.html" />
+    <Content Include="pages\inventoryItem.html" />
     <Content Include="pages\js\chartData.js" />
     <Content Include="pages\js\echarts.min.js" />
     <Content Include="pages\index.html" />
