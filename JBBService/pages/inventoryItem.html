@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
     <title>盘点明细</title>
 
     <link rel="stylesheet" href="css/reset.css">
@@ -10,21 +10,32 @@
     <link href="css/loading.css" rel="stylesheet" />
 
     <style type="text/css">
-        #title_bar {
+.span{
+　　background-color:#6699ff;
+　　display:block;
+　　float:left;
+　　width:100%;
+}
+
+        .title_bar {
             text-align: left; /*让div内部文字居中*/
-            margin-top: 5px;
-            margin-left: 1px;
-            margin-right: 1px;
-            width: 100px;
+            font-size: 30px;
+            width: auto;
+            margin-top: 10px;
             position: absolute;
             left: 0;
             top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
         }
 
         #main {
             text-align: center; /*让div内部文字居中*/
             background-color: #fff;
             border-radius: 20px;
+            overflow-y: scroll;
+            overflow-x: auto;
             width: 98%;
             height: 90%;
             margin-top: 20px;
@@ -45,10 +56,10 @@
 
         //监听加载状态改变
         window.onload = function () {
-            //var pname = UrlParm.parm("pname");
-            //var pcode = UrlParm.parm("pcode");
-            //initInventoryByPeidaiChartBar(pcode)
-            initInventoryByPeidaiChartBar(105)
+            var pname = UrlParm.parm("pname");
+            var pcode = UrlParm.parm("pcode");
+            initInventoryByPeidaiChartBar(pcode)
+            //initInventoryByPeidaiChartBar(105)
             //console.log(pname);
             //console.log(pcode);
         }
@@ -64,7 +75,8 @@
 <body>
 
 
-    <div id="title_bar" onclick="funclick();"><<返回报告</div>
+    <div id="title_bar" class="title_bar" onclick="funclick();"><span style="background-color:#6699ff">返回盘点报告</span></div>
+
     <input type="hidden" id="prod_code">
     <input type="hidden" id="prod_name">
 
@@ -72,7 +84,7 @@
 
     <div class="main" id="main">div1</div>
 
-
+    <br>
     <div id="myloading" class="loadEffect">
         <span></span>
         <span></span>

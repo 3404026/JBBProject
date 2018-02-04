@@ -7,8 +7,8 @@
     <ProjectGuid>{8FBE7DFA-2F3A-4A04-AAA1-C09E317FC4CA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OwinSelfhostSample</RootNamespace>
-    <AssemblyName>OwinSelfhostSample</AssemblyName>
+    <RootNamespace>JBBService</RootNamespace>
+    <AssemblyName>JBBService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -58,6 +58,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin">
@@ -121,6 +127,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="pages\css\style.css.bak" />
+    <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

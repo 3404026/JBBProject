@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/inventory/inventory",
     "pages/chart1/chart1",
     "pages/chart2/chart2",
     "pages/logs/logs"
@@ -13,23 +14,24 @@
   "tabBar": {
     "list": [
       {
+        "pagePath": "pages/inventory/inventory",
+        "text": "盘点",
+        "iconPath": "images/b.png",
+        "selectedIconPath": "images/b1.png"
+      },
+      {
         "pagePath": "pages/chart1/chart1",
         "text": "关注度",
-        "iconPath": "images/pie_L.png",
-        "selectedIconPath": "images/pie_H.png"
+        "iconPath": "images/c.png",
+        "selectedIconPath": "images/c1.png"
       },
       {
         "pagePath": "pages/chart2/chart2",
         "text": "成交率",
-        "iconPath": "images/bar_L.png",
-        "selectedIconPath": "images/bar_H.png"
-      },      
-      {
-        "pagePath": "pages/logs/logs",
-        "text": "关于",
-        "iconPath": "images/me_L.png",
-        "selectedIconPath": "images/me_H.png"
+        "iconPath": "images/a.png",
+        "selectedIconPath": "images/a1.png"
       }
+
     ]
   },
   "networkTimeout": {

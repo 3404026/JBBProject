@@ -1,8 +1,11 @@
 ﻿
-//var baseUrl = 'https://syscotech.cc:12321/api/User/';
+var baseUrl = 'https://syscotech.cc:12321/api/User/';
 //var baseUrl = 'http://syscotech.cc:12320/api/User/';
-var baseUrl = 'http://172.21.111.104:12320/api/User/';
+//var baseUrl = 'http://172.21.111.104:12320/api/User/';
 //var baseUrl = 'https://172.21.111.104:12321/api/User/';
+//var baseUrl = 'http://192.168.0.189:12320/api/User/';
+//var baseUrl = 'https://172.21.111.104:12321/api/User/';
+
 
 var myChart;
 var paraCode;
@@ -29,18 +32,15 @@ function initInventoryChartBar() {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{a} <br/>{b} : {c}"
             },
 
-            legend: {
-                data: ['成交率']
-            },
             xAxis: {
                 data: []
             },
             yAxis: {},
             series: [{
-                name: '成交',
+                name: '材质 : 件数',
                 type: 'bar',
                 data: []
             }]
@@ -51,8 +51,8 @@ function initInventoryChartBar() {
             charValue[i] = data[i].value;
             intInventoryCnt = intInventoryCnt + data[i].value;
         })
-        console.log(intInventoryCnt);
-        document.getElementById('title_bar').innerHTML = "当前在柜商品数量" + intInventoryCnt + "件";
+        //console.log(intInventoryCnt);
+        document.getElementById('title_bar').innerHTML = "<span style='background-color:#6699ff'>当前在柜商品数量<font color=red>" + intInventoryCnt + "</font>件</span>";
 
 
         myChart.setOption({
@@ -73,7 +73,7 @@ function initInventoryChartBar() {
 
             series: [{
                 // 根据名字对应到相应的系列
-                name: '关注度',
+                name: '材质 : 件数',
                 data: data
             }]
         });
@@ -81,7 +81,7 @@ function initInventoryChartBar() {
 
     //echarts图表点击跳转  
     myChart.on('click', function (param) {
-        console.log(param);
+        //console.log(param);
         window.location.href = "inventoryItem.html?pname=" + param.data.name + "&pcode=" + param.data.pcode;
         //initChartBar(param.data);
     });
@@ -114,12 +114,11 @@ function initChartBar(pcode) {
             myChart.setOption({
                 title: {
                     text: paraName + "成交率",
-                    subtext: '从 20170101  至  今天',
                     left: 'center',
                 },
                 tooltip : {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        formatter: "{a} <br/>{b} : {c}"
                 },
 
                 legend: {
@@ -130,7 +129,7 @@ function initChartBar(pcode) {
                 },
                 yAxis: {},
                 series: [{
-                    name: '成交',
+                    name: '成交率',
                     type: 'bar',
                     data: []
                 }]
@@ -160,17 +159,17 @@ function initChartBar(pcode) {
 
                 series: [{
                     // 根据名字对应到相应的系列
-                    name: '关注度',
+                    name: '成交率',
                     data: data
                 }]
             });
         });
 
         //echarts图表点击跳转  
-        myChart.on('click', function (param) {
-            //console.log(param);
-            initChartBar(param.data);
-        });
+        //myChart.on('click', function (param) {
+        //    //console.log(param);
+        //    initChartBar(param.data);
+        //});
 };
 
 
@@ -209,7 +208,7 @@ function initChartPie(pcode) {
         myChart.setOption({
             title: {
                 text:  paraName + "关注度",
-                subtext: '从 20170101  至  今天',
+                subtext: '截至今日',
                 left: 'center',
             },
 
@@ -323,6 +322,7 @@ function initInventoryByPeidaiChartBar(pcode) {
     $.getJSON(baseUrl + "getInventoryByPeidai", { "pcode": pcode }, function (jsonStrdata) {
         var data = eval('(' + jsonStrdata + ')'); //把后端返回的json数据装入对象obj
         if (data == "") {
+            window.location.href = "inventory.html";
             return;
         }
         //$("#myloading").empty(); //ajax返回成功，清除loading图标  
@@ -340,22 +340,11 @@ function initInventoryByPeidaiChartBar(pcode) {
             charPeidaiName[i] = data[i].peidaiName;
             charjianShu[i] = data[i].jianShu;
             charciShu[i] = data[i].ciShu;
+            //chartimeCount[i] = Math.round(data[i].timeCount / 60 * 100) / 100;
             chartimeCount[i] = data[i].timeCount;
+            console.log(data[i].timeCount);
 
         })
-
-        strjianShu = "{name:\"件数\",type:\"bar\",stack:\"总量\",label:{normal:{show:true,position:\"insideRight\"}},data:[1,1]}";
-        strciShu = "{name:\"体验次数\",type:\"bar\",stack:\"总量\",label:{normal:{show:true,position:\"insideRight\"}},data:[10,12]}";
-        strTimeCount = "{name:\"体验时长\",type:\"bar\",stack:\"总量\",label:{normal:{show:true,position:\"insideRight\"}},data:[13,41]}";
-
-        objSeries[0] =strjianShu;
-        objSeries[1] = strciShu;
-        objSeries[2] = strTimeCount;
-        //alert(objSeries[0]);
-        //alert(objSeries[1]);
-        //alert(objSeries[2]);
-        console.log(objSeries);
-        alert(objSeries);
         
 
         //设置完其它的样式，显示一个空的直角坐标轴，然后获取数据后填入数据
@@ -367,7 +356,7 @@ function initInventoryByPeidaiChartBar(pcode) {
                 }
             },
             legend: {
-                data: ['件数', '体验次数', '体验时长']
+                data: ['件数', '体验次数', '体验时长(分钟)']
             },
             grid: {
                 left: '3%',
@@ -385,7 +374,7 @@ function initInventoryByPeidaiChartBar(pcode) {
             series: [
                 { name: "件数", type: "bar", stack: "总量", label: { normal: { show: true, position: "insideRight" } }, data: charjianShu },
                 { name: "体验次数", type: "bar", stack: "总量", label: { normal: { show: true, position: "insideRight" } }, data: charciShu },
-                { name: "体验时长", type: "bar", stack: "总量", label: { normal: { show: true, position: "insideRight" } }, data: chartimeCount }
+                { name: "体验时长(分钟)", type: "bar", stack: "总量", label: { normal: { show: true, position: "insideRight" } }, data: chartimeCount }
             ]
 
         });

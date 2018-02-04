@@ -10,14 +10,17 @@
     <link href="css/loading.css" rel="stylesheet" />
 
     <style type="text/css">
-        #prevProd{
+        #prevProd {
             text-align: left; /*让div内部文字居中*/
-            margin-top:5px;  
-            margin-left:1px;
-            margin-right:1px;
-            width:50px;
+            font-size: 25px;
+            width: auto;
+            margin-top: 10px;
             position: absolute;
-            left:0;top:0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
         }
 
         #main {
@@ -49,7 +52,7 @@
         }
 	
 	function funclick(){
-             initChartBar(0);
+            // initChartBar(0);
 	}
  
     </script>
@@ -59,7 +62,7 @@
 <body>
   
 
-    <div  id="prevProd" onclick="funclick();"><<返回</div>
+    <div  id="prevProd" onclick="funclick();"><span style="background-color:#6699FF"><<返回</span></div>
     <input type="hidden"  id="prod_code">
     <input type="hidden"  id="prod_name">
           

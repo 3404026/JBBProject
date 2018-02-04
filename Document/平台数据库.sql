@@ -48,6 +48,20 @@ create table t_products  (
 );
 
 
+create table t_product_io(
+id   int(10) not null auto_increment,
+rfid_no varchar(32) not null,
+out_dttm datetime,
+in_dttm  datetime,
+create_dttm timestamp(0),
+remark   text,
+primary key (id) 
+);
+
+
+
+
+
 
 drop table t_inventory;
 create table t_inventory  (

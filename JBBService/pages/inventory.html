@@ -3,19 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>成交率报告</title>
+    <title>盘点报告</title>
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
     <link href="css/loading.css" rel="stylesheet" />
 
     <style type="text/css">
-        #title_bar {
+        .title_bar {
             text-align: center; /*让div内部文字居中*/
-            font-size:30px;
+            font-size: 30px;
             width: auto;
+            margin-top: 5px;
             position: absolute;
-            left:0;
+
+            left: 0;
             top: 0;
             bottom: 0;
             right: 0;
@@ -47,7 +49,7 @@
         //监听加载状态改变
         window.onload = function () {
             //initChartPie(0,"");
-            initInventoryChartBar(0);
+            initInventoryChartBar();
         }
 
         function funclick() {
@@ -63,14 +65,13 @@
 <body>
 
 
-    <div id="title_bar" onclick="funclick();"></div>
-    <input type="hidden" id="prod_code">
-    <input type="hidden" id="prod_name">
+    
+    <div id="title_bar" class="title_bar" onclick="funclick();"></div>
 
     <!--主体-->
+    <div class="main" id="main"></div>
 
-    <div class="main" id="main">div1</div>
-
+    
 
     <div id="myloading" class="loadEffect">
         <span></span>

@@ -29,7 +29,9 @@ namespace JBBCounter
         List<string> listDBCard = new List<string>();
         List<string> listLastCard = new List<string>();
         public List<string> lstTotalRfids = new List<string>();
-        public List<string> lstLeaveRfids = new List<string>();
+        public List<string> lstDiffRfids = new List<string>();
+        Product curProd = new Product();
+
         int intInterval;
         string apiAddress;
 
@@ -564,59 +566,98 @@ namespace JBBCounter
 
         public void funPostDataAndDisplayHtml(List<string> lstCurrRecvRfids)
         {
-
-            Product curProd = new Product();
-            
-            int intCnt = 0;
-            decimal decPriceTotal = 0;
-
-
-
             if (lstTotalRfids.Count() == 0)   //第一次初始化lstTotalRfids
+            {
                 lstTotalRfids = lstCurrRecvRfids;
+                string strCurrRecvRfids = JsonConvert.SerializeObject(lstCurrRecvRfids);
+                if (HttpPost(apiAddress + "/api/ProductIO/SaveInventory", strCurrRecvRfids) == false)
+                {
+                    // MessageBox.Show("数据上传失败。");
+                    return;
+                }
+                funDisplayHtml(lstCurrRecvRfids);
 
-            if (Util.ListEqual(listLastCard, lstCurrRecvRfids))  // 前后两次一样，不刷新页面
-                return;
-            listLastCard = lstCurrRecvRfids;
+            }
 
 
-            lstLeaveRfids = lstTotalRfids.Except(lstCurrRecvRfids).ToList();//差集,得到需要发往服务器（即需要显示的标签）
+            //if (Util.ListEqual(listLastCard, lstCurrRecvRfids))  // 前后两次一样，不刷新页面
+            //    return;
+
+
 
             lstTotalRfids = lstTotalRfids.Union(lstCurrRecvRfids).ToList<string>(); //收到的并入lstTotalRfids
+            lstDiffRfids = lstTotalRfids.Except(lstCurrRecvRfids).ToList();//差集,得到需要发往服务器（即需要显示的标签）
+                
+                
+
+
+            //if ( lstCurrRecvRfids.Count> listLastCard.Count() && listLastCard.Count()>0 )
+            //    lstDiffRfids = lstCurrRecvRfids.Except(listLastCard).ToList();//差集,得到需要发往服务器（即需要显示的标签）
+            //else
+            //    lstDiffRfids = listLastCard.Except(lstCurrRecvRfids).ToList();//差集,得到需要发往服务器（即需要显示的标签）
+
+            //listLastCard = lstCurrRecvRfids;
+
+
+            
 
             //上传在柜rfid到 盘点表
-            string strCurrRecvRfids = JsonConvert.SerializeObject(lstCurrRecvRfids);
-            if (HttpPost(apiAddress + "/api/ProductIO/SaveInventory", strCurrRecvRfids) == false)
+            if (lstCurrRecvRfids.Count == 0)
+            {
+                webBrowser1.Navigate(Application.StartupPath + @"\welcome.html");
+                return;
+            }
+            else
+            {
+                string strCurrRecvRfids = JsonConvert.SerializeObject(lstCurrRecvRfids);
+                if (HttpPost(apiAddress + "/api/ProductIO/SaveInventory", strCurrRecvRfids) == false)
+                {
+                    // MessageBox.Show("数据上传失败。");
+                    return;
+                }
+                funDisplayHtml(lstCurrRecvRfids);
+            }
+
+
+
+            //上传在柜台的rfid , 要去update im_dttm
+            if (lstDiffRfids.Count() == 0)
+                return;
+            string strUpdateRfids = JsonConvert.SerializeObject(lstCurrRecvRfids);
+            if (HttpPost(apiAddress + "/api/ProductIO/UpdateProdIOinDttm", strUpdateRfids) == false)
             {
                 // MessageBox.Show("数据上传失败。");
                 return;
             }
 
+
             //上传离柜rfid到 离柜表
-            string strLeaveRfids = JsonConvert.SerializeObject(lstLeaveRfids);
-            if (HttpPost(apiAddress+ "/api/ProductIO/SaveData", strLeaveRfids) == false)
+            if (lstDiffRfids.Count() == 0)
+                return;
+            string strDiffRfids = JsonConvert.SerializeObject(lstDiffRfids);
+            if (HttpPost(apiAddress + "/api/ProductIO/SaveData", strDiffRfids) == false)
             {
-               // MessageBox.Show("数据上传失败。");
+                // MessageBox.Show("数据上传失败。");
                 return;
             }
 
-            bool isWelcome = webBrowser1.Url.ToString().Contains("welcome.html");
-            if (lstLeaveRfids.Count == 0)
-            {
-                if (isWelcome)
-                    return;
-                else
-                {
-                    webBrowser1.Navigate(Application.StartupPath + @"\welcome.html");
-                    return;
-                }
-            }
 
-            lstLeaveRfids.Sort();
-            int cols = 6;
-            int rows = 0;
-            rows = lstLeaveRfids.Count / cols;
-            if (lstLeaveRfids.Count % cols > 0)
+
+
+
+        }
+
+        void funDisplayHtml(List<string> lstDisplayRfid) {
+
+            
+            int intCnt = 0;
+            decimal decPriceTotal = 0;
+            int cols = 10;
+            int rows = 3;
+
+            lstDisplayRfid.Sort();
+            rows = lstDisplayRfid.Count / cols;
+            if (lstDisplayRfid.Count % cols > 0)
                 rows = rows + 1;
             //font-family:'Microsoft YaHei';
             //
@@ -632,8 +673,8 @@ namespace JBBCounter
 
             strHtml = strHtml + "<span id=time1 style='width:100%;height:30px;color:#ff6700;font-size:30px;font-weight:bold'>";
             strHtml = strHtml + "<SCRIPT>";
-            strHtml = strHtml + " document.getElementById('time1').innerHTML='我的购物车，当前时间'+new Date().toLocaleTimeString();";
-            strHtml = strHtml + " setInterval(\"document.getElementById('time1').innerHTML='我的购物车，当前时间'+new Date().toLocaleTimeString();\",1000);";
+            strHtml = strHtml + " document.getElementById('time1').innerHTML='当前时间'+new Date().toLocaleTimeString();";
+            strHtml = strHtml + " setInterval(\"document.getElementById('time1').innerHTML='当前时间'+new Date().toLocaleTimeString();\",1000);";
             strHtml = strHtml + "</SCRIPT>";
             strHtml = strHtml + "</span>";
 
@@ -649,33 +690,28 @@ namespace JBBCounter
                 strHtml = strHtml + " <tr>";
                 for (int col = 0; col < cols; col++)
                 {
-                    if (idx > lstLeaveRfids.Count - 1)
+                    if (idx > lstDisplayRfid.Count - 1)
                         break;
-                    curProd = getProd(lstLeaveRfids[idx].ToString());
+                    curProd = getProd(lstDisplayRfid[idx].ToString());
                     if (curProd == null)
                     {
                         //decPriceTotal = decPriceTotal + curProd.Price;
                         strHtml = strHtml + "   <td valign= middle align =center  >";
-                        strHtml = strHtml + "     <img style='margin-top:60px' height='180' width='180' src='db\\noProduct.jpg'> ";
-                        strHtml = strHtml + "     <p> ";
-                        strHtml = strHtml + "    商品编号: " + lstLeaveRfids[idx].ToString();
-                        strHtml = strHtml + "     <p> ";
-                        strHtml = strHtml + "    商品名称: 不明";
-                        strHtml = strHtml + "     <p> ";
-                        strHtml = strHtml + "     <font color='red'>商品价格: 不明</font>";
+                        strHtml = strHtml + "     <img border=1 style='margin-top:5px' height='120' width='120' src='db\\noProduct.jpg'> ";
+                        strHtml = strHtml + "     <p>" + curProd.rfidNo + "</p> ";
+                        strHtml = strHtml + "     <p>无名商品</p> ";
+                        strHtml = strHtml + "     <font color='#ff6700'><p>价格: ￥不明确</p></font>";
                         strHtml = strHtml + "   </td>";
                     }
-                    else {
+                    else
+                    {
                         decPriceTotal = decPriceTotal + curProd.Price;
                         strHtml = strHtml + "   <td valign= middle align =center  >";
-                        strHtml = strHtml + "     <img style='margin-top:60px' height='180' width='180' src='db\\" + curProd.rfidNo + ".jpg'> ";
-                        strHtml = strHtml + "     <p> ";
-                        strHtml = strHtml + "    商品编号: " + curProd.rfidNo;
-                        strHtml = strHtml + "     <p> ";
-                        strHtml = strHtml + "    商品名称: " + curProd.prodName;
-                        strHtml = strHtml + "     <p> ";
-                        strHtml = strHtml + "     <font color='#ff6700'>商品价格: ￥" + curProd.Price + "</font>";
-                        strHtml = strHtml + "   </td>";                    
+                        strHtml = strHtml + "     <img border=1 style='margin-top:5px' height='120' width='120' src='db\\" + curProd.rfidNo + ".jpg'> ";
+                        strHtml = strHtml + "     <p>"+ curProd.rfidNo+"</p> ";
+                        strHtml = strHtml + "     <p>"+ curProd.prodCode + curProd.prodName+"</p> ";
+                        strHtml = strHtml + "     <font color='#ff6700'><p>价格: ￥" + curProd.Price + "</p></font>";
+                        strHtml = strHtml + "   </td>";
                     }
                     intCnt = intCnt + 1;
                     idx = idx + 1;
@@ -685,14 +721,13 @@ namespace JBBCounter
 
             strHtml = strHtml + "</table>";
             strHtml = strHtml + "<hr/>";
-            strHtml = strHtml + "<table width=100%  align=center border=0 ><tr><td width=60% align=right><span style='font-weight:bold;color:#ff6700;font-size:30px'>共计" + intCnt.ToString() + "件，结算金额￥" + decPriceTotal.ToString() + "元</span></td><td width=40% align=left><img src='db\\wxzf.jpg'><img src='db\\wxzfma.jpg'> </td></tr></table>";
+            //strHtml = strHtml + "<table width=100%  align=center border=0 ><tr><td width=60% align=right><span style='font-weight:bold;color:#ff6700;font-size:30px'>共计" + intCnt.ToString() + "件，结算金额￥" + decPriceTotal.ToString() + "元</span></td><td width=40% align=left><img src='db\\wxzf.jpg'><img src='db\\wxzfma.jpg'> </td></tr></table>";
+            strHtml = strHtml + "<table width=100%  align=center border=0 ><tr><td width=100% align=center><span style='font-weight:bold;color:#ff6700;font-size:30px'>柜内共计" + intCnt.ToString() + "件物品</span></td></tr></table>";
             strHtml = strHtml + "</TD></TR></TABLE>";
             strHtml = strHtml + "</body></html>";
             genHtmlFile(Application.StartupPath + @"\Cart.html", strHtml);
             webBrowser1.Navigate(Application.StartupPath + @"\Cart.html");
         }
-
-
 
         #region 生成htmlfile
         void genHtmlFile(string filename, string strHtml)

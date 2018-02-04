@@ -1,0 +1,24 @@
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>netsh http add sslcert ipport=0.0.0.0:12321 certhash=add245781e916ec9080db27f9268d8502d584286 appid={8FBE7DFA-2F3A-4A04-AAA1-C09E317FC4CA}
+
+
+C:\WINDOWS\system32>netsh http show sslcert
+
+SSL 证书绑定:
+-------------------------
+
+    IP:端口                      : 0.0.0.0:12321
+    证书哈希                : add245781e916ec9080db27f9268d8502d584286
+    应用程序 ID             : {8fbe7dfa-2f3a-4a04-aaa1-c09e317fc4ca}
+    证书存储名称            : (null)
+    验证客户端证书吊销 : Enabled
+    仅使用缓存客户端证书验证吊销 : Disabled
+    用法检查                : Enabled
+    吊销更新时间            : 0
+    URL 检索超时        : 0
+    CTL 标识符              : (null)
+    CTL 存储名称            : (null)
+    DS 映射器用法           : Disabled
+    协商客户端证书 : Disabled
+    拒绝连接           : Disabled
+
