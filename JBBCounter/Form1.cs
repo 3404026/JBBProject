@@ -621,8 +621,8 @@ namespace JBBCounter
 
 
             //上传在柜台的rfid , 要去update im_dttm
-            if (lstDiffRfids.Count() == 0)
-                return;
+            //if (lstDiffRfids.Count() == 0)
+            //    return;
             string strUpdateRfids = JsonConvert.SerializeObject(lstCurrRecvRfids);
             if (HttpPost(apiAddress + "/api/ProductIO/UpdateProdIOinDttm", strUpdateRfids) == false)
             {
@@ -649,24 +649,31 @@ namespace JBBCounter
 
         void funDisplayHtml(List<string> lstDisplayRfid) {
 
-            
+            int intInventoryCnt = lstDisplayRfid.Count();
+
             int intCnt = 0;
             decimal decPriceTotal = 0;
             int cols = 10;
             int rows = 3;
 
-            lstDisplayRfid.Sort();
+            lstTotalRfids.Sort();
+            //lstDisplayRfid.Sort();
+            List<string> lstExcept =  lstTotalRfids.Except(lstDisplayRfid).ToList();
+
+            lstDisplayRfid = lstTotalRfids;
+
             rows = lstDisplayRfid.Count / cols;
             if (lstDisplayRfid.Count % cols > 0)
                 rows = rows + 1;
             //font-family:'Microsoft YaHei';
             //
-            string strHtml = "<html><head><meta charset='utf-8'/>  ";
+            
+               string strHtml = "<html><head><meta charset='utf-8'/>";
             strHtml = strHtml + "<style type='text/css'> ";
             strHtml = strHtml + "  body{padding:0;margin:0; background:white;font-family:'Microsoft YaHei';}";
             strHtml = strHtml + "   div.bottom {width: 100%; position: absolute; bottom: 15; padding-top: 20px;  color:red; font-size: 35px;text-align: center;}";
             strHtml = strHtml + "</style>";
-            strHtml = strHtml + " </head>  <body  > <TABLE WIDTH=100% HEIGHT=100% BORDER =1><TR><TD align=center>";
+            strHtml = strHtml + " </head>  <body  > <TABLE WIDTH=100% HEIGHT=100% BORDER =0><TR><TD align=center>";
 
             //strHtml = strHtml + "<span style='width:100%;height:30px;color:#ff6700;font-size:30px;font-weight:bold'>我的购物车</span>";
 
@@ -697,20 +704,27 @@ namespace JBBCounter
                     {
                         //decPriceTotal = decPriceTotal + curProd.Price;
                         strHtml = strHtml + "   <td valign= middle align =center  >";
-                        strHtml = strHtml + "     <img border=1 style='margin-top:5px' height='120' width='120' src='db\\noProduct.jpg'> ";
-                        strHtml = strHtml + "     <p>" + curProd.rfidNo + "</p> ";
-                        strHtml = strHtml + "     <p>无名商品</p> ";
-                        strHtml = strHtml + "     <font color='#ff6700'><p>价格: ￥不明确</p></font>";
+                        if (lstExcept.Contains(lstDisplayRfid[idx].ToString()))
+                            strHtml = strHtml + "     <img border=0 style='margin-top:5px' height='100' width='100' src='db\\buying.jpg'>";
+                        else
+                            strHtml = strHtml + "     <img border=0 style='margin-top:5px' height='100' width='100' src='db\\noProduct.jpg'>";
+
+                        strHtml = strHtml + "     <div style=\"font-size:13px\">" + curProd.rfidNo + "</font></div>";
+                        strHtml = strHtml + "     <div style=\"font-size:10px\">无名商品 </font></div>";
+                        strHtml = strHtml + "     <div style=\"font-size:10px;color:#ff6700\">价格: ￥不明确</font></div>";
                         strHtml = strHtml + "   </td>";
                     }
                     else
                     {
                         decPriceTotal = decPriceTotal + curProd.Price;
                         strHtml = strHtml + "   <td valign= middle align =center  >";
-                        strHtml = strHtml + "     <img border=1 style='margin-top:5px' height='120' width='120' src='db\\" + curProd.rfidNo + ".jpg'> ";
-                        strHtml = strHtml + "     <p>"+ curProd.rfidNo+"</p> ";
-                        strHtml = strHtml + "     <p>"+ curProd.prodCode + curProd.prodName+"</p> ";
-                        strHtml = strHtml + "     <font color='#ff6700'><p>价格: ￥" + curProd.Price + "</p></font>";
+                        if (lstExcept.Contains(lstDisplayRfid[idx].ToString()))
+                            strHtml = strHtml + "     <img border=0 style='margin-top:5px' height='100' width='100' src='db\\buying.jpg'>";
+                        else
+                            strHtml = strHtml + "     <img border=0 style='margin-top:5px' height='100' width='100' src='db\\" + curProd.rfidNo + ".jpg'> ";
+                        strHtml = strHtml + "     <div style=\"font-size:13px\">" + curProd.rfidNo+ "</font></div>";
+                        strHtml = strHtml + "     <div style=\"font-size:10px\">" + curProd.prodCode + curProd.prodName+ "</font></div>";
+                        strHtml = strHtml + "     <div style=\"font-size:10px;color:#ff6700\">价格: ￥" + curProd.Price + "</font></div>";
                         strHtml = strHtml + "   </td>";
                     }
                     intCnt = intCnt + 1;
@@ -722,7 +736,7 @@ namespace JBBCounter
             strHtml = strHtml + "</table>";
             strHtml = strHtml + "<hr/>";
             //strHtml = strHtml + "<table width=100%  align=center border=0 ><tr><td width=60% align=right><span style='font-weight:bold;color:#ff6700;font-size:30px'>共计" + intCnt.ToString() + "件，结算金额￥" + decPriceTotal.ToString() + "元</span></td><td width=40% align=left><img src='db\\wxzf.jpg'><img src='db\\wxzfma.jpg'> </td></tr></table>";
-            strHtml = strHtml + "<table width=100%  align=center border=0 ><tr><td width=100% align=center><span style='font-weight:bold;color:#ff6700;font-size:30px'>柜内共计" + intCnt.ToString() + "件物品</span></td></tr></table>";
+            strHtml = strHtml + "<table width=100%  align=center border=0 ><tr><td width=100% align=center><span style='font-weight:bold;color:#ff6700;font-size:30px'>柜内共计" + intInventoryCnt.ToString() + "件物品</span></td></tr></table>";
             strHtml = strHtml + "</TD></TR></TABLE>";
             strHtml = strHtml + "</body></html>";
             genHtmlFile(Application.StartupPath + @"\Cart.html", strHtml);
@@ -857,7 +871,7 @@ namespace JBBCounter
 
                     listProd = (List<Product>)JsonTools.JsonToObject(myjson, listProd);
 
-                    this.FormBorderStyle = FormBorderStyle.None;
+                    //this.FormBorderStyle = FormBorderStyle.None;
                     this.WindowState = FormWindowState.Maximized;
 
                     webBrowser1.Top = 0;
